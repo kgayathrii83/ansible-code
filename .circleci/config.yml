@@ -24,21 +24,16 @@ jobs:
       - run:
           name: Install Ansible
           command: |
-            apk add --update ansible
-      - run:
-          name: Add public ip to ansible inventory
-          command: |
-            chmod 777 /etc/ansible/hosts
-            echo "54.92.254.115" >> /etc/ansible/hosts               
+            apk add --update ansible           
       - run:
           name: Run Playbook and Configure server
           command: |
-            ansible-playbook  main-remote.yml
+            ansible-playbook -i inventory main-remote.yml
 
 workflows:
   my-workflow:
     jobs:
-#      - create_infrastructure
+      - create_infrastructure
        - configure_infrastructure  
-#          requires :
-#            - create_infrastructure
+          requires :
+            - create_infrastructure
