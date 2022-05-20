@@ -22,9 +22,9 @@ jobs:
       - run:
           name: Add public ip to ansible inventory
           command: |
-            echo "[all]" > .circleci/ansible/inventory.txt
-            echo "54.92.254.115" >> .circleci/ansible/inventory.txt
-            cat .circleci/ansible/inventory.txt           
+            echo "[all]" > /tmp/inventory.txt 
+            echo "54.92.254.115" >> /tmp/inventory.txt 
+            cat /tmp/inventory.txt           
             
 
   configure_infrastructure: 
