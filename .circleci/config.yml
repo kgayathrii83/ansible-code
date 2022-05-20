@@ -14,18 +14,6 @@ jobs:
               --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:5} \
               --region us-east-1
 
-  add_public_ip_to_hosts_file: 
-    docker:
-      - image: python:3.7-alpine3.11
-    steps:
-      - checkout
-      - run:
-          name: Add public ip to ansible inventory
-          command: |
-            chmod 777 /etc/ansible/hosts
-            echo "54.92.254.115" >> /etc/ansible/hosts                     
-            
-
   configure_infrastructure: 
     docker:
       - image: python:3.7-alpine3.11
@@ -38,6 +26,11 @@ jobs:
           command: |
             apk add --update ansible
       - run:
+          name: Add public ip to ansible inventory
+          command: |
+            chmod 777 /etc/ansible/hosts
+            echo "54.92.254.115" >> /etc/ansible/hosts               
+      - run:
           name: Run Playbook and Configure server
           command: |
             ansible-playbook  main-remote.yml
@@ -45,8 +38,7 @@ jobs:
 workflows:
   my-workflow:
     jobs:
-      - create_infrastructure
-      - add_public_ip_to_hosts_file
+#      - create_infrastructure
       - configure_infrastructure:
           requires :
             - add_public_ip_to_hosts_file
