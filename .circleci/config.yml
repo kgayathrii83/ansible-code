@@ -22,9 +22,8 @@ jobs:
       - run:
           name: Add public ip to ansible inventory
           command: |
-            echo "[all]" > /tmp/inventory.txt 
-            echo "54.92.254.115" >> /tmp/inventory.txt 
-            cat /tmp/inventory.txt           
+            chmod 777 /etc/ansible/hosts
+            echo "54.92.254.115" >> /etc/ansible/hosts                     
             
 
   configure_infrastructure: 
@@ -41,7 +40,7 @@ jobs:
       - run:
           name: Run Playbook and Configure server
           command: |
-            ansible-playbook -i /tmp/inventory.txt main-remote.yml
+            ansible-playbook  main-remote.yml
 
 workflows:
   my-workflow:
