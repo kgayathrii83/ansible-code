@@ -39,7 +39,6 @@ workflows:
   my-workflow:
     jobs:
 #      - create_infrastructure
-      - configure_infrastructure:
-          requires :
-            - add_public_ip_to_hosts_file
-            - create_infrastructure
+       - configure_infrastructure  
+#          requires :
+#            - create_infrastructure
